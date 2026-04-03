@@ -600,6 +600,43 @@ All conditions of \textbf{Case 3} are satisfied. Therefore:
 
 \end{answer}
 
+\subsection*{Question 4}
+
+We apply the \textbf{Master Theorem} with parameters:
+\[
+    a = 8, \quad b = 2, \quad f(n) = n^4 + 3n^3 \log n, \quad
+    n^{\log_b a} = n^{\log_{2} 8} = n^3
+\]
+
+\noindent\textbf{Checking Case 3} conditions: $a = 8 \ge 1$,\ $b = 2 > 1$,\ $f(n) = n^4 + 3n^3 \log n \ge 0$.
+
+We must verify $f(n) \in \Omega(n^{3+\epsilon})$ for some $\epsilon > 0$. Take $\epsilon = 1$:
+\[
+    f(n) = n^4 + 3n^3 \log n \in \Omega(n^{3+1}) = \Omega(n^4) \qquad \checkmark
+\]
+
+Now we verify the \textbf{regularity condition}: $a \cdot f(n/b) \leq c \cdot f(n)$ for some $c < 1$ and large $n$:
+\[
+    8 \cdot f(n/2) = 8 \left( \frac{n^4}{16} + \frac{3n^3}{8} \log\left(\frac{n}{2}\right) \right) = \frac{n^4}{2} + 3n^3(\log n - 1) = \frac{n^4}{2} + 3n^3 \log n - 3n^3
+\]
+We want to show:
+\[
+    \frac{n^4}{2} + 3n^3 \log n - 3n^3 \leq c(n^4 + 3n^3 \log n)
+\]
+For $c = \frac{2}{3}$, the inequality holds since:
+\[
+    \frac{1}{2}n^4 + 3n^3 \log n - 3n^3 < \frac{2}{3}n^4 + 2n^3 \log n
+\]
+which is true for sufficiently large $n$.
+
+\medskip
+\noindent\textbf{Conclusion:} 
+All conditions of \textbf{Case 3} are satisfied. Therefore:
+\[
+    \boxed{T(n) = \Theta(f(n)) = \Theta(n^4 + 3n^3 \log n)} \quad \checkmark
+\]
+
+\end{answer}
 
 \vspace{2cm}
 
@@ -658,48 +695,86 @@ In addition, show the calculation of $T(n)$ as done in the lecture.
  \hline\hline
  1 & $\Theta(1)$ & $\Theta(1)$ & $\Theta (1)$  \\ 
  \hline
- 2 & & &  \\
+ 2 & $\Theta(1)$& $\Theta(1)$& $\Theta(1)$ \\
  \hline
- 3 & & & \\ 
+ 3 & $\Theta(1)$ &$\Theta(1)$ & $\Theta(1)$\\ 
   \hline
- 4 & & & \\ 
+ 4 &$\Theta(n)$ &$\Theta(1)$ &$\Theta(n)$ \\ 
    \hline
- 5 & & & \\ 
+ 5 &$\Theta(n)$ &$\Theta(1)$ &$\Theta(n)$ \\ 
   \hline
- 6 & & & \\ 
+ 6 &$\Theta(n)$ &$\Theta(1)$ &$\Theta(n)$ \\ 
     \hline
- 7 & & & \\ 
+ 7 &$\Theta(n)$ &$\Theta(1)$ &$\Theta(n)$ \\ 
  \hline
  8 & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\ 
  \hline
  9 & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\ 
  \hline
- 10 & & & \\ 
+ 10 & $\Theta(1)$ & $\Theta(1)$ & $\Theta (1)$  \\
  \hline
- 11 & & & \\ 
+ 11 & $\Theta(1)$ & $\Theta(1)$ & $\Theta (1)$  \\
  \hline
- 12 & & & \\ 
+ 12 & $\Theta(1)$ & $\Theta(1)$ & $\Theta (1)$  \\
  \hline
- 13 & & & \\ 
+ 13 & $\Theta(1)$ & $\Theta(1)$ & $\Theta (1)$  \\
  \hline
-  14 & & & \\ 
+  14 & $\Theta(1)$ & $\Theta(n^2)$ & $\Theta(n^2)$\\  
  \hline
  15 & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\ 
  \hline
- 16 & & & \\ 
+ 16  & $\Theta(1)$ & $\Theta(n^2)$ & $\Theta(n^2)$\\  
  \hline
  17 & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
  \hline
  18 & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
  \hline
- 19 & & & \\
+ 19 & $\Theta(1)$ & $\Theta(1)$ & $\Theta (1)$  \\ 
  \hline
- Total & \cellcolor{Gray} & \cellcolor{Gray} & $\Theta (?)$  \\ 
+ Total & \cellcolor{Gray} & \cellcolor{Gray} & $\Theta (n^2)$  \\ 
  \hline
 \end{tabular}
 \end{center}
-\[ T(n) = ?\]
-
+\[
+    T(n) =
+    \begin{cases}
+        1              & \text{if } n = 1 \\
+        T(n-1) + 4n    & \text{if } n > 1
+    \end{cases}
+\]
+We will prove by the guess method that $T(n) = \Theta(n^2)$:\\
+First, we will prove $T(n) \in O(n^2)$:\\
+\medskip
+\begin{center}
+    Guess: $T(n) \leq c \cdot n^2$\\
+    Base: $T(2) = T(1) + 4\cdot2 = 1 + 8 \leq c \cdot 2^2 \Rightarrow c \ge 3$\\
+    Induction step: Assume $T(m) \leq c \cdot m^2$ for all $2\leq m< n$\\
+    $T(n) = T(n-1)+4n\leq$ \\
+    $c\cdot (n-1)^2 + 4n$ =\\
+    $c \cdot (n^2 -2n + 1) + 4n =$\\
+    $cn^2 - 2cn +c + 4n =$\\
+    $cn^2 + (4-2c)n + c \Rightarrow$\\
+    $(4-2c)n + c \leq 0 \Rightarrow$\\
+    $c=3, n_0 \ge 2$ \checkmark \\
+    So T(n) = $O(n^2)$
+\end{center}
+\medskip
+Now we will prove the lower bound:\\
+\begin{center}
+     Guess: $T(n) \ge d \cdot n^2$\\
+    Base: $T(1) =1 \ge 1^2 \cdot d \Rightarrow d \leq 1$\\
+    Induction step: Assume $T(m) \ge d \cdot m^2$ for all $1\leq m< n$\\
+    $T(n) = T(n-1)+4n \ge$\\
+    $d \cdot (n-1)^2+4n =$\\
+    $d \cdot (n^2 - 2n +1) + 4n =$\\
+    $dn^2 -2dn + d   + 4n=$\\
+    $dn^2 + (4 -2d)n + d \Rightarrow$\\
+    $(4-2d)n +d \ge 0 \Rightarrow$\\
+    $d =1, n_0 \ge 1 $ \checkmark\\
+    So T(n) = $\Omega(n^2)$
+\end{center}
+\medskip 
+So $T(n) = \Theta(n^2)$ for $n_0 =2$
 \end{answer}
 
 \newpage
