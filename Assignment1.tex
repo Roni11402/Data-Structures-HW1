@@ -294,8 +294,6 @@ Let $f(n)$ and $g(n)$ be asymptotically positive functions.
 \end{boxxed}
 
 \vspace{1ex}
-\textbf{Prove (formally!) each of the following conjectures:}
-
 \begin{enumerate}
     \item (4 points) $n > \log n $ for all $n \in \mathbb{N}$
     \item (2 points) Reflexivity: $f(n) \in \Theta(f(n))$
@@ -309,10 +307,196 @@ Let $f(n)$ and $g(n)$ be asymptotically positive functions.
     \[n^k \in O( (1 + \varepsilon)^n)\]
 \end{enumerate}
 \end{question}
-
+\bigskip
 \begin{answer}
-    Replace with your answer.
+\textbf {Question 1:}
+\medskip
+Proof by induction on $n$.
+\noindent\textbf{Base case} ($n = 1$):
+\[
+    1 > \log_2(1) = 0 \quad \checkmark
+\]
+
+\noindent\textbf{Induction hypothesis:} Assume that for some $n \in \mathbb{N}$, we have $n > \log n$.
+We will show that $n + 1 > \log(n + 1)$.
+
+\medskip
+\[ 
+n+1 = \log_2({2^{n+1}}) > \log_2({n+1})
+\]
+\begin{center}
+(By the sub-claim and the fact that $\log$ is a monotonically increasing function)
+\end{center}
+
+\noindent\textbf{Sub-claim:} $2^{n+1} > n + 1$ for all $n \in \mathbb{N}$, proven by induction.
+
+\medskip
+\noindent\underline{Base case of sub-claim} ($n = 1$):
+\[
+    2^{1+1} = 2^2 = 4 > 2 = 1 + 1 \quad \checkmark
+\]
+
+\noindent\underline{Inductive step of sub-claim:} Assume $2^{n+1} > n + 1$. We show $2^{n+2} > n + 2$:
+\[
+    2^{n+2} = 2^{n+1} \cdot 2
+    > (n+1) \cdot 2
+    = 2n + 2
+    > n + 2
+\]
+since $2n > n \iff n > 0$, which holds for all $n \in \mathbb{N}$. $\checkmark$
+
+\medskip
+\noindent Therefore $2^{n+1} > n + 1$ for all $n \in \mathbb{N}$, which implies $n + 1 > \log(n+1)$,
+completing the induction. $\checkmark$ \\
+\medskip
+\textbf {Question 2:}
+\medskip
+We prove $f(n) \in \Theta(f(n))$ by showing both $f(n) \in O(f(n))$ and $f(n) \in \Omega(f(n))$.
+
+\medskip
+\noindent\underline{Part 1: $f(n) \in O(f(n))$}
+
+We need $c_1, n_0 \in \mathbb{N}$ such that $f(n) \leq c_1 \cdot f(n)$ for all $n > n_0$:
+\[
+    f(n) \leq c_1 \cdot f(n) \iff 1 \leq c_1
+\]
+Choose $c_1 = 1$,\ $n_0 = 1$ --- a valid choice since $1 \leq 1$. $\checkmark$
+
+\medskip
+\noindent\underline{Part 2: $f(n) \in \Omega(f(n))$}
+
+We need $c_2, n_0 \in \mathbb{N}$ such that $f(n) \geq c_2 \cdot f(n)$ for all $n > n_0$:
+\[
+    f(n) \geq c_2 \cdot f(n) \iff 1 \geq c_2
+\]
+Choose $c_2 = 1$,\ $n_0 = 1$ --- a valid choice since $1 \geq 1$. $\checkmark$
+
+\medskip
+Since both conditions hold, $f(n) \in \Theta(f(n))$. $\checkmark$ \\
+\medskip
+\textbf {Question 3:} \\
+\noindent If $f(n) \in \Theta(g(n))$ and $g(n) \in \Theta(h(n))$, then $f(n) \in \Theta(h(n))$.
+
+\medskip
+\noindent Given $f(n) \in \Theta(g(n))$ and $g(n) \in \Theta(h(n))$.
+We will show $f(n) \in \Theta(h(n))$, i.e., we prove two parts:
+\begin{enumerate}[(1)]
+    \item $f(n) \in O(h(n))$
+    \item $f(n) \in \Omega(h(n))$
+\end{enumerate}
+
+\medskip
+\noindent\underline{Proof of (1): $f(n) \in O(h(n))$}
+
+We need $c_i, n_0 \in \mathbb{N}$ such that $f(n) \leq c_i \cdot h(n)$ for all $n > n_0$.
+
+Since $f(n) \in \Theta(g(n))$, there exist $c,\, n_0^{(1)}$ such that:
+\[
+    f(n) \leq c \cdot g(n) \quad \text{for all } n > n_0^{(1)}
+\]
+Since $g(n) \in \Theta(h(n))$, there exist $c',\, n_0^{(2)}$ such that:
+\[
+    g(n) \leq c' \cdot h(n) \quad \text{for all } n > n_0^{(2)}
+\]
+Therefore, for all $n > \max\!\left(n_0^{(1)},\, n_0^{(2)}\right)$:
+\[
+    f(n) \leq c \cdot g(n) \leq c \cdot c' \cdot h(n) = c_i \cdot h(n)
+    \quad \checkmark
+\]
+
+\medskip
+\noindent\underline{Proof of (2): $f(n) \in \Omega(h(n))$}
+
+We need $c_i, n_0 \in \mathbb{N}$ such that $f(n) \geq c_i \cdot h(n)$ for all $n > n_0$.
+
+Since $f(n) \in \Theta(g(n))$, there exist $c,\, n_0^{(1)}$ such that:
+\[
+    f(n) \geq c \cdot g(n) \quad \text{for all } n > n_0^{(1)}
+\]
+Since $g(n) \in \Theta(h(n))$, there exist $c',\, n_0^{(2)}$ such that:
+\[
+    g(n) \geq c' \cdot h(n) \quad \text{for all } n > n_0^{(2)}
+\]
+Therefore, for all $n > \max\!\left(n_0^{(1)},\, n_0^{(2)}\right)$:
+\[
+    f(n) \geq c \cdot g(n) \geq c \cdot c' \cdot h(n) = c_i \cdot h(n)
+    \quad \checkmark
+\]
+
+\medskip
+\noindent Both (1) and (2) hold, so $f(n) \in \Theta(h(n))$. $\checkmark$
+
+\textbf{Question 4:}
+\noindent $f(n) \in O(g(n)) \iff g(n) \in \Omega(f(n))$
+ 
+\bigskip
+\noindent\textbf{($\Rightarrow$)} Assume $f(n) \in O(g(n))$. We show $g(n) \in \Omega(f(n))$.
+ 
+There exist $c_1,\, n_0 \in \mathbb{N}$ such that for all $n > n_0$:
+\[f(n) \leq c_1 \cdot g(n)\] 
+from $f(n) \in O(g(n))$ \\
+Dividing both sides by $c_1$:
+\[
+    \frac{1}{c_1} \cdot f(n) \leq g(n)
+    \quad\Longrightarrow\quad
+    g(n) \geq \frac{1}{c_1} \cdot f(n)
+\]
+Setting $c_2 = \dfrac{1}{c_1}$, we get $g(n) \geq c_2 \cdot f(n)$ for all $n > n_0$,
+so $g(n) \in \Omega(f(n))$. $\checkmark$
+ 
+\bigskip
+\noindent\textbf{($\Leftarrow$)} Assume $g(n) \in \Omega(f(n))$. We show $f(n) \in O(g(n))$.
+ 
+There exist $c_4,\, n_0 \in \mathbb{N}$ such that for all $n > n_0$:
+\[g(n) \geq c_4 \cdot f(n)\]
+from $g(n) \in \Omega(f(n))$
+
+Dividing both sides by $c_4$:
+\[
+    \frac{1}{c_4} \cdot g(n) \geq f(n)
+    \quad\Longrightarrow\quad
+    f(n) \leq \frac{1}{c_4} \cdot g(n)
+\]
+Setting $c_3 = \dfrac{1}{c_4}$, we get $f(n) \leq c_3 \cdot g(n)$ for all $n > n_0$, \\
+so $f(n) \in O(g(n))$. $\checkmark$ \\
+\medskip
+\textbf{Question 5:}
+\noindent\underline{Proof: $\log(f(n)) \in \Omega(\log(g(n)))$}\\
+\medskip
+Since $f(n) \in \Omega(g(n))$, there exist constants $n_0$ and $c > 0$ such that for all $n > n_0$:
+\[
+f(n) \ge c \cdot g(n)
+\]
+According to the monotonicity of the $\log$ function:
+$\log(f(n)) \ge \log(c \cdot g(n)) = \log(c) + \log(g(n))$
+\medskip
+
+Since $g(n)$ is unbounded, $\log(g(n))$ dominates the constant $\log(c)$, thus:
+$\log(f(n)) \in \Omega(\log(g(n)))$ \\
+\medskip
+\textbf{Question 6:}
+\noindent\underline{Proof:}\\
+    Let there be k>1 and $\epsilon > 0.$\\
+    We will set: $n = 2^m$\\
+    So for:
+    \begin{center}
+    $log^k(n) \leq c \cdot n^\epsilon$ We will place $n = 2^m$\\
+    $m^k \leq 2^{m^\epsilon} = {2^\epsilon}^m$\\
+    As we learned in class, exponential functions are always greater than polynomial functions when $n \Rightarrow \infty$
+\end{center}
 \end{answer}
+
+
+
+
+
+
+
+
+
+
+
+
 
 \newpage
 
@@ -325,13 +509,97 @@ Find and prove an asymptotic tight bound $\Theta$ for $T(n)$ in each of the foll
     \item $T(n) = 6T(\frac{n}{2}) + n^4 \log{n}$
     \item $T(n) = 8T(\frac{n}{2}) + n^4 + 3n^3  \log{n} $
     \item $T(n) = T(\sqrt{n}) + n $
-    
 \end{enumerate}
 \end{question}
 
-\begin{answer}
-    Replace with your answer.
+\begin{answer} \\
+We apply the \textbf{Master Theorem} with parameters:
+\[
+    a = 4, \quad b = 2, \quad f(n) = n, \quad
+    n^{\log_b a} = n^{\log_2 4} = n^2
+\]
+
+\noindent\textbf{Checking Case 1} conditions: $a = 4 \ge 1$,\ $b = 2 > 1$,\ $f(n) = n \ge 0$.
+
+We must verify $f(n) \in \BigO{n^{\log_b a - \varepsilon}}$ for some $\varepsilon > 0$.
+Take $\varepsilon = \tfrac{1}{2}$:
+\[
+    f(n) = n \;\leq\; c \cdot n^{2 - \frac{1}{2}} \;=\; c \cdot n^{\frac{3}{2}}
+    \qquad \text{for } c > 1,\ n_0 > 1 \quad\checkmark
+\]
+
+Therefore $f(n) \in \BigO{n^2}$, and by the Master Theorem:
+\[
+    \boxed{T(n) \in \BigTh{n^2}}
+\]
+
+\bigskip
+
+\subsection*{Question 2}
+
+
+We apply the \textbf{Master Theorem} with parameters:
+\[
+    a = 1, \quad b = \tfrac{7}{3}, \quad f(n) = 1, \quad
+    n^{\log_b a} = n^{\log_{7/3} 1} = n^0 = 1
+\]
+
+\noindent\textbf{Checking Case 2} conditions: $a = 1 \ge 1$,\ $b = \tfrac{7}{3} > 1$,\ $f(n) = 1 \ge 0$.
+
+We must verify $f(n) \in \BigTh{n^{\log_b a}}$:
+\[
+    f(n) = 1 \in \BigTh{1} \qquad \text{for } c > 1,\ n_0 > 1 \quad\checkmark
+\]
+
+Therefore, by the Master Theorem:
+\[
+    \boxed{T(n) \in \BigTh{\log n}}
+\]
+
+\bigskip
+
+\subsection*{Question 3}
+
+
+We apply the \textbf{Master Theorem} with parameters:
+\[
+    a = 6, \quad b = 2, \quad f(n) = n^4 \log n, \quad
+    n^{\log_b a} = n^{\log_2 6} \approx n^{2.58}
+\]
+
+\noindent\textbf{Checking Case 3} conditions: $a = 6 \ge 1$,\ $b = 2 > 1$,\ $f(n) = n^4 \log n \ge 0$.
+
+We must verify $f(n) \in \BigOm{n^{\log_b a + \varepsilon}}$ for some $\varepsilon > 0$.
+Take $\varepsilon = 1$:
+\[
+    n^{\log_2 6 + 1} \approx n^{3.58} \;\leq\; n^4 \log n = f(n)
+    \qquad \text{for } c = 1,\ n_0 = 1 \quad\checkmark
+\]
+
+Now we verify the \textbf{regularity condition}: $a \cdot f\!\left(\tfrac{n}{b}\right) \leq c \cdot f(n)$ for some $c < 1$:
+\[
+    6 \cdot f\!\left(\tfrac{n}{2}\right) \leq c \cdot f(n)
+\]
+for $c = \frac{1}{2}$:\\
+$6 \cdot \frac{n^4(log(n)-1)}{16} \leq \frac{n^4logn}{2}$
+\[
+    \frac{3}{8} n^4 (\log n - 1) \leq \frac{1}{2} n^4 \log n
+\]
+Dividing by $n^4 \log n$ (which is positive for $n > 1$):
+\[
+    \frac{3}{8} \left( 1 - \frac{1}{\log n} \right) \leq \frac{1}{2}
+\]
+Since $1 - \frac{1}{\log n} < 1$, the inequality holds for all $n \ge 2$ with $c = \frac{1}{2} < 1$.
+
+\medskip
+\noindent\textbf{Conclusion:} 
+All conditions of \textbf{Case 3} are satisfied. Therefore:
+\[
+    T(n) = \Theta(f(n)) = \Theta(n^4 \log n) \quad \checkmark
+\]
+
 \end{answer}
+
 
 \vspace{2cm}
 
