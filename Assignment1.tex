@@ -461,31 +461,57 @@ Dividing both sides by $c_4$:
 \]
 Setting $c_3 = \dfrac{1}{c_4}$, we get $f(n) \leq c_3 \cdot g(n)$ for all $n > n_0$, \\
 so $f(n) \in O(g(n))$. $\checkmark$ \\
-\medskip
+
+\bigskip
+
 \textbf{Question 5:}
 \noindent\underline{Proof: $\log(f(n)) \in \Omega(\log(g(n)))$}\\
-\medskip
 Since $f(n) \in \Omega(g(n))$, there exist constants $n_0$ and $c > 0$ such that for all $n > n_0$:
 \[
 f(n) \ge c \cdot g(n)
 \]
 According to the monotonicity of the $\log$ function:
-$\log(f(n)) \ge \log(c \cdot g(n)) = \log(c) + \log(g(n))$
+\[
+\log(f(n)) \ge \log(c \cdot g(n)) = \log(c) + \log(g(n))
+\]
 \medskip
+We now show $\log(c) + \log(g(n)) \geq \frac{1}{2}\log(g(n))$ for large enough $n$.
+Since $g(n)$ is an unbounded increasing monotone function, $\log(g(n)) \to \infty$.
+Therefore, there exists $n_1 > n_0$ such that for all $n > n_1$:
+\[
+\log(g(n)) \geq |\log(c)|
+\]
+This implies $\log(c) \geq -\log(g(n))$, and therefore:
+\[
+\log(c) + \log(g(n)) \geq -\log(g(n)) + \log(g(n)) = \log(g(n)) \cdot \frac{1}{2} \cdot 2 \geq \frac{1}{2}\log(g(n))
+\]
+Setting $c' = \frac{1}{2}$, we get $\log(f(n)) \geq c' \cdot \log(g(n))$ for all $n > n_1$,
+so $\log(f(n)) \in \Omega(\log(g(n)))$. $\checkmark$ \\
 
-Since $g(n)$ is unbounded, $\log(g(n))$ dominates the constant $\log(c)$, thus:
-$\log(f(n)) \in \Omega(\log(g(n)))$ \\
-\medskip
+\bigskip
+
 \textbf{Question 6:}
 \noindent\underline{Proof:}\\
-Let there be k>1 and $\epsilon > 0.$\\
-We will set: $n = 2^m$\\
-So for:
-    \begin{center}
-    $log^k(n) \leq c \cdot n^\epsilon$ We will place $n = 2^m$\\
-    $m^k \leq 2^{m^\epsilon} = {2^\epsilon}^m$\\
-    As we learned in class, exponential functions are always greater than polynomial functions when $n \Rightarrow \infty$
-\end{center}
+Let $k \geq 1$ and $\varepsilon > 0$ be constants.
+We substitute $n = 2^m$, so $\log n = m$ and $n^\varepsilon = 2^{m\varepsilon}$.
+The claim becomes:
+\[
+m^k \leq c \cdot (2^\varepsilon)^m \quad \text{for some constant } c > 0 \text{ and all large } m
+\]
+We apply the given hint with constant $\dfrac{k}{\varepsilon \log 2}$:
+there exists $m_0$ such that for all $m > m_0$:
+\[
+\frac{k}{\varepsilon \log 2} < \frac{m}{\log m}
+\implies k \log m < \varepsilon m \log 2
+\implies \log(m^k) < \log(2^{\varepsilon m})
+\]
+Since $\log$ is a monotone increasing function:
+\[
+m^k < 2^{\varepsilon m} = (2^\varepsilon)^m = n^\varepsilon
+\]
+Setting $c = 1$ and $n_0 = 2^{m_0}$, we get $\log^k(n) \leq c \cdot n^\varepsilon$ for all $n > n_0$,
+so $\log^k(n) \in O(n^\varepsilon)$. $\checkmark$ \\
+\medskip
 
 
 \end{answer}
