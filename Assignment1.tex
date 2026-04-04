@@ -663,6 +663,10 @@ All conditions of \textbf{Case 3} are satisfied. Therefore:
 \[
     \boxed{T(n) = \Theta(f(n)) = \Theta(n^4 + 3n^3 \log n)} \quad \checkmark
 \]
+Since $n^4$ dominates $3n^3\log n$ for large $n$, we have $f(n) = \Theta(n^4)$, and therefore:
+\[
+    \boxed{T(n) = \Theta(f(n)) = \Theta(n^4)} \quad \checkmark
+\]
 
 \subsection*{Question 5}
 We will set up the recursion tree.\\
@@ -684,19 +688,23 @@ To prove $T(n) \in \Theta(n)$, we will show $T(n) \in O(n)$ and $T(n) \in \Omega
 
 \medskip
 \noindent\textbf{First, we prove $T(n) \in O(n)$:}
-\begin{center}
-    $\sum_{i=0}^{\log\log n} n^{(1/2)^i} \leq c \cdot n$ \\
-    for $n_0 = 4$ and $c = 2$ \\
-    so $T(n) \in O(n)$
-\end{center}
+\[
+\sum_{i=0}^{\log\log n} n^{(1/2)^i} 
+= n^1 + n^{1/2} + n^{1/4} + \cdots
+= n \left(1 + n^{-1/2} + n^{-3/4} + \cdots \right)
+\leq n \sum_{i=0}^{\infty} \left(\frac{1}{\sqrt{n}}\right)^i
+= n \cdot \frac{1}{1 - n^{-1/2}}
+\leq 2n
+\]
+for $n \geq 4$, since $\frac{1}{1-n^{-1/2}} \leq 2$ when $n^{-1/2} \leq \frac{1}{2}$, i.e.\ $n \geq 4$.
+So $T(n) \in O(n)$. $\checkmark$
 
 \medskip
 \noindent\textbf{Now, we prove $T(n) \in \Omega(n)$:}
-\begin{center}
-    $\sum_{i=0}^{\log\log n} n^{(1/2)^i} \geq c \cdot n$ \\
-    for $n_0 = 1$ and $c = 1$ \\
-    so $T(n) \in \Omega(n)$
-\end{center}
+\[
+\sum_{i=0}^{\log\log n} n^{(1/2)^i} \geq n^{(1/2)^0} = n
+\]
+So $T(n) \in \Omega(n)$. $\checkmark$
 
 \noindent Since both bounds hold,\\
 \[
