@@ -511,8 +511,32 @@ m^k < 2^{\varepsilon m} = (2^\varepsilon)^m = n^\varepsilon
 \]
 Setting $c = 1$ and $n_0 = 2^{m_0}$, we get $\log^k(n) \leq c \cdot n^\varepsilon$ for all $n > n_0$,
 so $\log^k(n) \in O(n^\varepsilon)$. $\checkmark$ \\
-\medskip
 
+\bigskip
+
+\textbf{Question 7:}
+\noindent\underline{Proof:}\\
+Let $k \in \mathbb{N}$ and $\varepsilon > 0$ be constants.
+To prove $n^k \in O((1+\varepsilon)^n)$ we will find a constant $c$ and $n_0$ so that for all $n > n_0$, $n^k \leq c \cdot (1 + \varepsilon)^n$.\\
+\medskip
+We set $c = 1$. Since $\log$ is a monotone function, $n^k \leq (1+\varepsilon)^n$ is equivalent to:
+\[
+k\log n \leq n\log(1+\varepsilon)
+\]
+which rearranges to:
+\[
+\frac{k}{\log(1+\varepsilon)} \leq \frac{n}{\log n}
+\]
+Since $\varepsilon > 0$, we have $\log(1+\varepsilon) > 0$, so $\dfrac{k}{\log(1+\varepsilon)}$ is a positive constant.
+By the given hint, there exists $n_0$ such that for all $n > n_0$:
+\[
+\frac{k}{\log(1+\varepsilon)} < \frac{n}{\log n} \quad \checkmark
+\]
+Reversing the steps, this implies $k\log n < n\log(1+\varepsilon)$, and since $\log$ is monotone increasing:
+\[
+n^k < (1+\varepsilon)^n = c \cdot (1+\varepsilon)^n
+\]
+Therefore $n^k \in O((1+\varepsilon)^n)$. $\checkmark$
 
 \end{answer}
 
@@ -660,9 +684,9 @@ which is true for sufficiently large $n$.
 \medskip
 \noindent\textbf{Conclusion:} 
 All conditions of \textbf{Case 3} are satisfied. Therefore:
-\[
-    \boxed{T(n) = \Theta(f(n)) = \Theta(n^4 + 3n^3 \log n)} \quad \checkmark
-\]
+\begin{center}
+    $T(n) = \Theta(f(n)) = \Theta(n^4 + 3n^3 \log n)$ 
+\end{center}
 Since $n^4$ dominates $3n^3\log n$ for large $n$, we have $f(n) = \Theta(n^4)$, and therefore:
 \[
     \boxed{T(n) = \Theta(f(n)) = \Theta(n^4)} \quad \checkmark
