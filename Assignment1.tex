@@ -9,7 +9,7 @@
 \usepackage{algorithm}
 \usepackage{algorithmic}
 \usepackage{float}
-
+\usepackage{tikz}
 %% Sets page size and margins
 \usepackage[a4paper,top=3cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
 
@@ -841,6 +841,8 @@ In addition, show the calculation of $T(n)$ as done in the lecture.
         T(n-1) + 4n    & \text{if } n > 1
     \end{cases}
 \]
+the functions only includes $T(n-1)$ once because the recursion is in a "If-Else" format.\\
+\medskip
 We will prove by the guess method that $T(n) = \Theta(n^2)$:\\
 First, we will prove $T(n) \in O(n^2)$:\\
 \medskip
@@ -944,7 +946,55 @@ Output:  4 \hspace{1cm} (\textit{9 appears in $A$ and appears once in $B$,  7 ap
 \vspace{0.5 cm}
 
 \begin{answer}
-    You should include the algorithm description, run-time and additional memory analysis:
+    You should include the algorithm description, run-time and additional memory analysis: \\
+    Our algorithm receives two unsorted arrays: Array $A$ and Array $B$, of size $N\in \mathbb {N}$.
+    The algorithm outputs, the number of elements in Array $B$ that appear in Array $A$.
+    \bigskip
+
+\begin{algorithm}[H]
+  \caption{ElementInBFromA (a[int], b[int])}
+  \begin{algorithmic}[1]
+    \STATE counter $\gets$ 0
+    \STATE  create array $seen[0,...,2 \cdot (a.length)$]
+       \FOR  {i=0 to a.length - 1}
+          \STATE $seen[a[i]] \gets true$
+      \ENDFOR  
+       \FOR  {j=0 to b.length - 1}
+          \IF {$seen[b[j]] = true$}
+          \STATE $counter \gets counter + 1$
+          \ENDIF
+      \ENDFOR  
+    \RETURN counter
+  \end{algorithmic} 
+\end{algorithm}
+
+\begin{center}    
+\begin{tabular}{||c | c | c | c | c ||} 
+ \hline
+ Line number & \makecell{Number of times \\ the line is performed} & Cost of a single repetition & Total cost of this line & Memory used\\ [0.5ex] 
+ \hline\hline
+ 1 & $\Theta(1)$ & $\Theta(1)$ & $\Theta (1)$ & $\Theta (1)$  \\ 
+ \hline
+ 2 & $\Theta(1)$& $\Theta(1)$& $\Theta(1)$ & $\Theta(2N)$ \\
+ \hline
+ 3 & $\Theta(N)$ &$\Theta(1)$ & $\Theta(N)$ & -\\ 
+  \hline
+ 4 &$\Theta(N)$ &$\Theta(1)$ &$\Theta(N)$ & - \\ 
+   \hline
+ 5 & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray}\\  
+  \hline
+ 6 &$\Theta(N)$ &$\Theta(1)$ &$\Theta(N)$ & - \\ 
+    \hline
+ 7 &$\Theta(N)$ &$\Theta(1)$ &$\Theta(N)$ & - \\ 
+ \hline
+ 8 &$\Theta(N)$ &$\Theta(1)$ &$\Theta(N)$ & - \\ 
+ \hline
+ 9 & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray}\\  
+10 & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray}\\  
+ Total & \cellcolor{Gray} & \cellcolor{Gray} & $\Theta (N)$ &$\Theta(N)$  \\ 
+ \hline
+\end{tabular}
+\end{center}
 \end{answer}
 
 \vspace{0.75 cm}
@@ -957,6 +1007,51 @@ Solve question \ref{q5:a}, where the value of each element in the arrays is a na
 
 \begin{answer}
     You should include the algorithm description, run-time, and additional memory analysis:
+
+\begin{algorithm}[H]
+  \caption{ElementInBFromA (a[int], b[int])}
+  \begin{algorithmic}[1]
+    \STATE counter $\gets$ 0
+    \STATE  create array seen[0,...,$(a.length)^2$]
+       \FOR  {i=0 to a.length - 1}
+          \STATE $seen[a[i]] \gets true$
+      \ENDFOR  
+       \FOR  {j=0 to b.length - 1}
+          \IF {$seen[b[j]] = true$}
+          \STATE $counter \gets counter + 1$
+          \ENDIF
+      \ENDFOR  
+    \RETURN counter
+  \end{algorithmic} 
+\end{algorithm}
+
+\begin{center}    
+\begin{tabular}{||c | c | c | c | c ||} 
+ \hline
+ Line number & \makecell{Number of times \\ the line is performed} & Cost of a single repetition & Total cost of this line & Memory used\\ [0.5ex] 
+ \hline\hline
+ 1 & $\Theta(1)$ & $\Theta(1)$ & $\Theta (1)$ & $\Theta (1)$  \\ 
+ \hline
+ 2 & $\Theta(1)$& $\Theta(1)$& $\Theta(1)$ & $\Theta(N^2)$ \\
+ \hline
+ 3 & $\Theta(N)$ &$\Theta(1)$ & $\Theta(N)$ & -\\ 
+  \hline
+ 4 &$\Theta(N)$ &$\Theta(1)$ &$\Theta(N)$ & - \\ 
+   \hline
+ 5 & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray}\\  
+  \hline
+ 6 &$\Theta(N)$ &$\Theta(1)$ &$\Theta(N)$ & - \\ 
+    \hline
+ 7 &$\Theta(N)$ &$\Theta(1)$ &$\Theta(N)$ & - \\ 
+ \hline
+ 8 &$\Theta(N)$ &$\Theta(1)$ &$\Theta(N)$ & - \\ 
+ \hline
+ 9 & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray}\\  
+10 & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray}\\  
+ Total & \cellcolor{Gray} & \cellcolor{Gray} & $\Theta (N)$ &$\Theta(N^2)$  \\ 
+ \hline
+\end{tabular}
+\end{center}
 \end{answer}
 
 \newpage
@@ -966,23 +1061,372 @@ The following sequence of keys has been added to an AVL tree.
 $< 5, \ 6, \ 12, \ 10, 8 >$. 
 \end{question}
 \begin{answer}
-Draw the AVL tree after each addition.
-
-% \includegraphics[width=0.8\textwidth]{AAA.png}\\[1cm]
+Draw the AVL tree after each addition. \\
+\textbf{First Insertion: }\\
+\begin{tikzpicture}[
+  every node/.style={circle, draw, minimum size=8mm},
+  level distance=15mm,
+  sibling distance=20mm
+]
+\node {5}
+  child [missing] {}
+  child [missing] {};
+\end{tikzpicture} \\
+\textbf{Second Insertion: }\\
+\begin{tikzpicture}[
+  every node/.style={circle, draw, minimum size=8mm},
+  level distance=15mm,
+  sibling distance=20mm
+]
+\node {5}
+  child[missing] {}
+  child {node {6}};
+\end{tikzpicture} \\
+\textbf{Third Insertion (Before RR-rotation) : }\\
+\begin{tikzpicture}[
+  every node/.style={circle, draw, minimum size=8mm},
+  level distance=15mm,
+  sibling distance=20mm
+]
+\node {5}
+  child[missing] {}
+  child {node {6}
+  child[missing] {}
+  child {node {12}}};
+\end{tikzpicture} \\
+\textbf{Third Insertion (After RR-rotation) : } \\
+\begin{tikzpicture}[
+  every node/.style={circle, draw, minimum size=8mm},
+  level distance=15mm,
+  sibling distance=20mm
+]
+\node {6}
+  child {node {5}}
+  child {node {12}};
+\end{tikzpicture} \\
+\textbf{Forth Insertion :}\\
+\begin{tikzpicture}[
+  every node/.style={circle, draw, minimum size=8mm},
+  level distance=15mm,
+  sibling distance=20mm
+]
+\node {6}
+  child {node {5}}
+  child {node {12}
+  child {node {10}}
+  child[missing] {}};
+\end{tikzpicture} \\
+\textbf{Fifth Insertion (Before LL-Rotation):}\\
+\begin{tikzpicture}[
+  every node/.style={circle, draw, minimum size=8mm},
+  level distance=15mm,
+  sibling distance=20mm
+]
+\node {6}
+  child {node {5}}
+  child {node {12}
+  child {node {10}
+  child {node {8}}
+  child[missing] {}}
+  child[missing] {}};
+\end{tikzpicture} \\
+\textbf{Fifth Insertion (After LL-Rotation):}\\
+\begin{tikzpicture}[
+  every node/.style={circle, draw, minimum size=8mm},
+  level distance=15mm,
+  sibling distance=20mm
+]
+\node {6}
+  child {node {5}}
+  child {node {10}
+    child {node {8}}
+  child {node {12}}};
+\end{tikzpicture}
 \end{answer}
 
 \begin{question} (10 points)
 Consider the following set $S$ of keys: $\{ 1,2,3,4,5,6,7 \} $
 \end{question}
-\begin{answer}
      Write an insertion sequence of the keys in $S$ that has \textbf{at least two rotations overall} and results in an AVL tree of  
          \begin{enumerate}
-             \item[(i)] maximum height.
-              \item[(ii)]  minimum height.
+            \begin{answer}
+             \item[(i)] maximum height.\\
+            \textbf{First Insertion:}\\
+                \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            sibling distance=20mm
+            ]
+            \node {2};      
+            \end{tikzpicture}\\
+            \bigskip
+            \textbf{Second Insertion:}\\
+                \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            sibling distance=30mm
+            ]
+            \node {2}
+                child{node{1}}
+                child[missing];
+            \end{tikzpicture}\\
+            \bigskip
+            \textbf{Third Insertion:}\\
+                \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            sibling distance=30mm
+            ]
+            \node {2}
+                child{node{1}}
+                child{node{3}};
+            \end{tikzpicture}\\
+            \bigskip
+            \textbf{Fourth Insertion:}\\
+                \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            sibling distance=30mm
+            ]
+            \node {2}
+                child{node{1}}
+                child{node{3}
+                    child[missing]
+                    child{node{5}}
+                };
+            \end{tikzpicture}\\
+            \bigskip
+            \textbf{Fifth Insertion:}\\
+                \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            sibling distance=30mm
+            ]
+            \node {2}
+                child{node{1}}
+                child{node{3}
+                    child[missing]
+                    child{node{5}
+                        child[missing]
+                        child{node{6}}
+                    }
+                };
+            \end{tikzpicture}\\
+            \bigskip
+            \textbf{Fifth Insertion (after RR rotation):}\\
+                \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            sibling distance=30mm
+            ]
+            \node {2}
+                child{node{1}}
+                child{node{5}
+                    child{node{3}}
+                    child{node{6}}
+                };
+            \end{tikzpicture}\\
+            \bigskip
+            \textbf{Sixth Insertion:}\\
+                \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            sibling distance=30mm
+            ]
+            \node {2}
+                child{node{1}}
+                child{node{5}
+                    child{node{3}
+                        child[missing]
+                        child{node{4}}
+                    }
+                    child{node{6}}
+                };
+            \end{tikzpicture}\\
+            \bigskip
+            \textbf{Sixth Insertion (after RL rotation):}\\
+                \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            sibling distance=30mm
+            ]
+            \node {3}
+                child{node{2}
+                    child{node{1}}
+                    child[missing]
+                 }
+                child{node{5}
+                    child{node{4}}
+                    child{node{6}}
+                };
+            \end{tikzpicture}\\
+            \bigskip
+            \textbf{Last Insertion:}\\
+                \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            sibling distance=30mm
+            ]
+            \node {3}
+                child{node{2}
+                    child{node{1}}
+                    child[missing]
+                 }
+                child{node{5}
+                    child{node{4}}
+                    child{node{6}
+                        child[missing]
+                        child{node{7}}
+                    }
+                };
+            \end{tikzpicture}\\
+            \bigskip
+              \item[(ii)]  minimum height.\\
+              \textbf{First Insertion:}\\
+                \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            sibling distance=20mm
+            ]
+            \node {1};      
+            \end{tikzpicture}\\
+            \bigskip
+            \textbf{Second Insertion:}\\
+            \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            sibling distance=30mm 
+            ]
+                \node{1}
+                    child[missing]
+                    child{node{2}};
+            \end{tikzpicture}\\
+            \bigskip
+            \textbf{Third Insertion:}\\
+            \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            sibling distance=30mm
+            ]
+                \node{1}
+                    child[missing]
+                    child{node{2}
+                        child[missing]
+                        child{node{3}}
+                    };
+            \end{tikzpicture}\\
+            \bigskip
+            \textbf{Third Insertion (after RR rotation):}\\
+            \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            sibling distance=30mm
+            ]
+                \node{2}
+                    child{node{1}}
+                    child{node{3}};
+            \end{tikzpicture}\\
+            \bigskip
+            \textbf{Fourth Insertion:}\\
+            \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            sibling distance=30mm
+            ]
+                \node{2}
+                    child{node{1}}
+                    child{node{3}
+                        child[missing]
+                        child{node{4}}
+                    };
+            \end{tikzpicture}\\
+            \bigskip
+            \textbf{Fifth Insertion:}\\
+            \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            sibling distance=30mm
+            ]
+                \node{2}
+                    child{node{1}}
+                    child{node{3}
+                        child[missing]
+                        child{node{4}
+                            child[missing]
+                            child{node{5}}
+                        }
+                    };
+            \end{tikzpicture}\\
+            \bigskip
+            \textbf{Fifth Insertion (after RR rotation):}\\
+            \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            sibling distance=30mm
+            ]
+                \node{2}
+                    child{node{1}}
+                    child{node{4}
+                        child{node{3}}
+                        child{node{5}}
+                        };
+                    \end{tikzpicture}\\
+            \bigskip
+            \textbf{Sixth and seventh Insertion:}\\
+            \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            sibling distance=30mm
+            ]
+                \node{2}
+                    child{node{1}}
+                    child{node{4}
+                        child{node{3}}
+                        child{node{5}
+                            child[missing]
+                            child{node{6}
+                                child[missing]
+                                child{node{7}}
+                            }
+                        }
+                    };
+                    \end{tikzpicture}\\
+            \bigskip
+            \textbf{Sixth and seventh Insertions (after RR rotation):}\\
+            \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            sibling distance=30mm
+            ]
+                \node{2}
+                    child{node{1}}
+                    child{node{4}
+                        child{node{3}}
+                        child{node{6}
+                            child{node{5}}
+                            child{node{7}}
+                            }
+                        };
+                    \end{tikzpicture}\\
+            \bigskip
+            \textbf{after RR rotation:}\\
+            \begin{tikzpicture}[
+            every node/.style={circle, draw, minimum size=8mm},
+            level distance=15mm,
+            level 1/.style={sibling distance=40mm},
+            level 2/.style={sibling distance=20mm}
+        ]
+                \node{4}
+                    child{node{2}
+                        child{node{1}}
+                        child{node{3}}
+                        }
+                    child{node{6}
+                        child{node{5}}
+                        child{node{7}}
+                        };
+                    \end{tikzpicture}\\
+            \end{answer}
            \end{enumerate}
-\end{answer}
-
-
-
 
 \end{document}
